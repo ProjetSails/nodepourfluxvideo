@@ -6,9 +6,6 @@ if( process.argv.length < 3 ) {
 	process.exit();
 }
 
-var exec = require('child_process').exec;
-var cmd = 'ffmpeg -s 160x120 -f avfoundation -r 30 -pix_fmt 0rgb -i "1" -f mpeg1video -b:v 800k -r 30 http://127.0.0.1:8082/pass/160/120';
-
 var STREAM_SECRET = process.argv[2],
 	STREAM_PORT = process.argv[3] || 8082,
 	WEBSOCKET_PORT = process.argv[4] || 8084,
@@ -74,9 +71,5 @@ var streamServer = require('http').createServer( function(request, response) {
 	}
 }).listen(STREAM_PORT);
 
-console.log('Listening for MPEG Stream on http://127.0.0.1:'+STREAM_PORT+'/<secret>/<width>/<height>');
-console.log('Awaiting WebSocket connections on ws://127.0.0.1:'+WEBSOCKET_PORT+'/');
-
-exec(cmd, function(error, stdout, stderr) {
-  // command output is in stdout
-});
+console.log('Listening for MPEG Stream on http://localhost:'+STREAM_PORT+'/<secret>/<width>/<height>');
+console.log('Awaiting WebSocket connections on ws://localhost:'+WEBSOCKET_PORT+'/');
